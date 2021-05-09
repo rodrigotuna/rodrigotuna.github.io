@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.Controller.Commands</a> &gt; <span class="el_source">OpenCommand.java</span></div><h1>OpenCommand.java</h1><pre class="source lang-java linenums">package lpoo.Controller.Commands;
+
+import lpoo.Model.Board;
+import lpoo.Model.Game;
+import lpoo.Model.Position;
+import lpoo.Model.Tile;
+import lpoo.Model.TileState.TileState;
+
+public class OpenCommand extends TileCommand {
+
+    public OpenCommand(Game game) {
+<span class="nc" id="L12">        super(game);</span>
+<span class="nc" id="L13">    }</span>
+
+    private Position getCursorPosition(){
+<span class="nc" id="L16">        return game.getCursor().getPosition();</span>
+    }
+
+    private Board getGameBoard(){
+<span class="nc" id="L20">        return game.getBoard();</span>
+    }
+
+    private Tile getTileAtPosition(int x, int y){
+<span class="nc" id="L24">        return getGameBoard().getTileAtPosition(new Position(x,y));</span>
+    }
+
+    private void cascadeOpen(int x, int y){
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if(getTileAtPosition(x,y).getAdjacentMines() == 0){</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">            for(int line = Math.max(0, x - 1); line &lt; Math.min(getGameBoard().getHeight(), x + 2); line++){</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">                for(int col = Math.max(0, y - 1); col &lt; Math.min(getGameBoard().getHeight(), y + 2); col++){</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">                    if(getTileAtPosition(line,col).getStateName() == TileState.STATE.CLOSED)</span>
+<span class="nc" id="L32">                    cascadeOpen(line,col);</span>
+                }
+            }
+        }
+<span class="nc" id="L36">        getTileAtPosition(x,y).setState(getTileAtPosition(x,y).getState().open());</span>
+<span class="nc" id="L37">    }</span>
+
+    @Override
+    public void execute() {
+<span class="nc" id="L41">        selectedTile().setState(selectedTile().getState().open());</span>
+<span class="nc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
