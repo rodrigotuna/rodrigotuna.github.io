@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HighScoreMenuView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer.menu</a> &gt; <span class="el_source">HighScoreMenuView.java</span></div><h1>HighScoreMenuView.java</h1><pre class="source lang-java linenums">package lpoo.viewer.menu;
+
+import lpoo.gui.GUI;
+import lpoo.model.Position;
+import lpoo.model.menu.Frame;
+import lpoo.model.score.HighScoreMenu;
+import lpoo.model.score.HighScore;
+import lpoo.viewer.FrameView;
+import lpoo.viewer.View;
+
+public class HighScoreMenuView extends View&lt;HighScoreMenu&gt; {
+    public HighScoreMenuView(HighScoreMenu model) {
+<span class="fc" id="L13">        super(model);</span>
+<span class="fc" id="L14">    }</span>
+
+    private void drawNewHighscore(GUI gui, int center){
+<span class="fc" id="L17">        gui.drawString(&quot;hello, i'm ...&quot;, center , gui.getHeightPos(-TITLE_ROW), &quot;#FFFFFF&quot;);</span>
+
+<span class="fc" id="L19">        gui.drawString(getModel().getUsername(), center + 2, gui.getHeightPos(0), &quot;#FFFFFF&quot;);</span>
+
+<span class="fc" id="L21">        String continueMessage = &quot;continue&quot;;</span>
+<span class="fc" id="L22">        gui.drawString(continueMessage, gui.getWidthPos(continueMessage.length()),</span>
+<span class="fc" id="L23">                gui.getHeightPos(TITLE_ROW+2),&quot;#FFF200&quot;);</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    protected void drawElement(Position position, GUI gui) {
+<span class="fc" id="L28">        gui.setTerminalBackgroundColor(&quot;#05122D&quot;);</span>
+
+<span class="fc" id="L30">        Frame frame = new Frame(gui.terminalSize().getColumns(), gui.terminalSize().getRows());</span>
+<span class="fc" id="L31">        Frame lineFrame = new Frame(HighScore.MAX_LENGTH,0);</span>
+
+<span class="fc" id="L33">        int center = drawMultiColoredTitle(gui,&quot;new highscore!&quot;, TITLE_ROW);</span>
+
+<span class="fc" id="L35">        drawNewHighscore(gui,center);</span>
+
+<span class="fc" id="L37">        new FrameView(lineFrame).drawElement(new Position(center + 2, gui.getHeightPos(1)), gui);</span>
+<span class="fc" id="L38">        new FrameView(frame).drawElement(new Position(0,0), gui);</span>
+<span class="fc" id="L39">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

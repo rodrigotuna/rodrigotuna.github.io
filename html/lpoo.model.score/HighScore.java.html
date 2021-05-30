@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HighScore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.model.score</a> &gt; <span class="el_source">HighScore.java</span></div><h1>HighScore.java</h1><pre class="source lang-java linenums">package lpoo.model.score;
+
+import lpoo.model.Element;
+
+public class HighScore implements Element, Comparable&lt;HighScore&gt; {
+    public static final int MAX_LENGTH = 10;
+    private String username;
+    private int score;
+
+<span class="fc" id="L10">    public HighScore(String username, int score){</span>
+<span class="fc" id="L11">        this.username = username;</span>
+<span class="fc" id="L12">        this.score = score;</span>
+<span class="fc" id="L13">    }</span>
+
+    public int getTime() {
+<span class="fc" id="L16">        return score;</span>
+    }
+
+    public int getScore() {
+<span class="fc" id="L20">        return score;</span>
+    }
+
+    public String getUsername() {
+<span class="fc" id="L24">        return username;</span>
+    }
+
+    public void setScore(int score) {
+<span class="nc" id="L28">        this.score = score;</span>
+<span class="nc" id="L29">    }</span>
+
+    @Override
+    public String toString(){
+<span class="fc" id="L33">        return username + &quot; &quot; + score;</span>
+    }
+
+    @Override
+    public int compareTo(HighScore o) {
+<span class="fc" id="L38">        return score - o.score;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

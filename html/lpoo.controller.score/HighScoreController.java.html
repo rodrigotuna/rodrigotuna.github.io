@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HighScoreController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.controller.score</a> &gt; <span class="el_source">HighScoreController.java</span></div><h1>HighScoreController.java</h1><pre class="source lang-java linenums">package lpoo.controller.score;
+
+import lpoo.Application;
+import lpoo.controller.Controller;
+import lpoo.gui.Key;
+import lpoo.model.score.HighScoreMenu;
+import lpoo.model.menu.Menu;
+import lpoo.states.MenuState;
+
+public class HighScoreController extends Controller&lt;HighScoreMenu&gt; {
+
+    public HighScoreController(HighScoreMenu model) {
+<span class="nc" id="L13">        super(model);</span>
+<span class="nc" id="L14">    }</span>
+
+    @Override
+    public void step(Application application, Key key) {
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if(key.getChar() == null){</span>
+<span class="nc bnc" id="L19" title="All 4 branches missed.">            switch(key.getAction()){</span>
+                case SELECT:
+<span class="nc bnc" id="L21" title="All 2 branches missed.">                    if(!getModel().isEmpty()) {</span>
+<span class="nc" id="L22">                       getModel().addHighScore();</span>
+<span class="nc" id="L23">                       application.setState(new MenuState(new Menu(getModel().getConfiguration())));</span>
+                    }
+                    break;
+                case DELETE:
+<span class="nc" id="L27">                    getModel().deleteLastLetter();</span>
+<span class="nc" id="L28">                    break;</span>
+                case QUIT:
+<span class="nc" id="L30">                    application.setState(null);</span>
+<span class="nc" id="L31">                    break;</span>
+            }
+        } else {
+<span class="nc" id="L34">            getModel().addChar(key.getChar());</span>
+        }
+
+<span class="nc" id="L37">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

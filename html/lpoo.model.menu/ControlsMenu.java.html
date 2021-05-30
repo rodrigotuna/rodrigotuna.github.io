@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControlsMenu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.model.menu</a> &gt; <span class="el_source">ControlsMenu.java</span></div><h1>ControlsMenu.java</h1><pre class="source lang-java linenums">package lpoo.model.menu;
+
+import lpoo.model.Configuration;
+import lpoo.model.Element;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class ControlsMenu implements Element {
+    private final Configuration configuration;
+    private static List&lt;String&gt; controls;
+    private static List&lt;String&gt; description;
+
+<span class="nc" id="L14">    public ControlsMenu(Configuration configuration){</span>
+<span class="nc" id="L15">        this.configuration = configuration;</span>
+<span class="nc" id="L16">        controls = Arrays.asList(&quot;A&quot;, &quot;S&quot;, &quot;Z&quot;, &quot;esc&quot;,&quot;arrows&quot;, &quot;enter&quot;);</span>
+<span class="nc" id="L17">        description = Arrays.asList(&quot;select tile&quot;, &quot;flag &amp; unflag&quot;, &quot;undo move&quot;, &quot;back to menu&quot;, &quot;move cursor&quot;, &quot;menu select&quot;);</span>
+<span class="nc" id="L18">    }</span>
+
+    public Configuration getConfiguration() {
+<span class="nc" id="L21">        return configuration;</span>
+    }
+
+    public List&lt;String&gt; getControls() {
+<span class="nc" id="L25">        return controls;</span>
+    }
+
+    public List&lt;String&gt; getDescription(){
+<span class="nc" id="L29">        return description;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

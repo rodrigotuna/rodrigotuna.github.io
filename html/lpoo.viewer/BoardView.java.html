@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoardView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer</a> &gt; <span class="el_source">BoardView.java</span></div><h1>BoardView.java</h1><pre class="source lang-java linenums">package lpoo.viewer;
+
+import lpoo.gui.GUI;
+import lpoo.model.game.Board;
+import lpoo.model.Position;
+import lpoo.model.game.Tile;
+
+public class BoardView extends View&lt;Board&gt; {
+
+    public BoardView(Board board) {
+<span class="fc" id="L11">        super(board);</span>
+<span class="fc" id="L12">    }</span>
+
+    @Override
+    protected void drawElement(Position position, GUI gui) {
+        TileView tileView;
+<span class="fc" id="L17">        Board board = getModel();</span>
+        Position tilePosition, tileScreenPosition;
+
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for(int line = 0; line &lt; board.getHeight(); line++){</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">            for(int column = 0; column &lt; board.getWidth(); column++){</span>
+
+<span class="fc" id="L23">                tilePosition = new Position(line,column);</span>
+<span class="fc" id="L24">                tileScreenPosition = new Position(column * 3 + position.getX() + 1, line * 2 + position.getY());</span>
+
+<span class="fc" id="L26">                tileView = new TileView(board.getTileAtPosition(tilePosition));</span>
+<span class="fc" id="L27">                tileView.drawElement(tileScreenPosition, gui);</span>
+            }
+        }
+<span class="fc" id="L30">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

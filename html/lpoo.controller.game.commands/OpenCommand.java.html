@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.controller.game.commands</a> &gt; <span class="el_source">OpenCommand.java</span></div><h1>OpenCommand.java</h1><pre class="source lang-java linenums">package lpoo.controller.game.commands;
+
+import lpoo.model.game.Board;
+import lpoo.model.game.Game;
+import lpoo.model.Position;
+import lpoo.model.game.Tile;
+import lpoo.model.game.tilestate.ClosedState;
+import lpoo.model.game.tilestate.TileState;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class OpenCommand implements Command{
+    private Game game;
+    private List&lt;Tile&gt; openedTiles;
+
+<span class="fc" id="L17">    public OpenCommand(Game game) {</span>
+<span class="fc" id="L18">        this.game = game;</span>
+<span class="fc" id="L19">        this.openedTiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    }</span>
+
+    private Position getCursorPosition(){
+<span class="fc" id="L23">        return game.getCursor().getPosition();</span>
+    }
+
+    private Board getGameBoard(){
+<span class="fc" id="L27">        return game.getBoard();</span>
+    }
+
+    private Tile getTileAtPosition(int x, int y){
+<span class="fc" id="L31">        return getGameBoard().getTileAtPosition(new Position(x,y));</span>
+    }
+
+    private void cascadeOpen(int x, int y){
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if(getTileAtPosition(x,y).getStateName() == TileState.STATE.CLOSED){</span>
+<span class="fc" id="L36">            openedTiles.add(getTileAtPosition(x,y));</span>
+<span class="fc" id="L37">            getTileAtPosition(x,y).setState(getTileAtPosition(x,y).getState().open());</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            if(getTileAtPosition(x,y).getAdjacentMines() == 0) openAdjacent(x,y);</span>
+        }
+<span class="fc" id="L40">    }</span>
+
+    private void openAdjacent(int x, int y){
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        for(int line = Math.max(0, x - 1); line &lt; Math.min(getGameBoard().getHeight(), x + 2); line++){</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">            for(int col = Math.max(0, y - 1); col &lt; Math.min(getGameBoard().getWidth(), y + 2); col++){</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">                if(line == x &amp;&amp; col == y) continue;</span>
+<span class="nc" id="L46">                cascadeOpen(line,col);</span>
+            }
+        }
+<span class="fc" id="L49">    }</span>
+
+    @Override
+    public void execute(){
+<span class="fc" id="L53">        cascadeOpen(getCursorPosition().getX(), getCursorPosition().getY());</span>
+
+<span class="fc" id="L55">        int remainingTiles = getGameBoard().getRemainingTiles() - openedTiles.size();</span>
+<span class="fc" id="L56">        getGameBoard().setRemainingTiles(remainingTiles);</span>
+<span class="fc" id="L57">    }</span>
+
+    @Override
+    public void undo(){
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        for(Tile tile : openedTiles){</span>
+<span class="fc" id="L62">            tile.setState(new ClosedState());</span>
+<span class="fc" id="L63">        }</span>
+<span class="fc" id="L64">        getGameBoard().setRemainingTiles(getGameBoard().getRemainingTiles() + openedTiles.size());</span>
+<span class="fc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

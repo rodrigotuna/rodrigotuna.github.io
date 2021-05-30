@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LanternaGUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.gui</a> &gt; <span class="el_source">LanternaGUI.java</span></div><h1>LanternaGUI.java</h1><pre class="source lang-java linenums">package lpoo.gui;
+
+import com.googlecode.lanterna.*;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+
+public class LanternaGUI implements GUI{
+    private Screen screen;
+    private TextGraphics graphics;
+    private static final int DEFAULT_FONT_SIZE = 17;
+    private boolean refreshAll;
+    public static final int DEFAULT_COLS = 30;
+    public static final int DEFAULT_ROWS = 20;
+
+
+<span class="nc" id="L28">    public LanternaGUI(int width, int height){</span>
+        try{
+<span class="nc" id="L30">            SwingTerminalFontConfiguration fontConfig = createFont();</span>
+<span class="nc" id="L31">            Terminal terminal = createTerminal(fontConfig, width, height);</span>
+
+<span class="nc" id="L33">            this.screen = createScreen(terminal);</span>
+<span class="nc" id="L34">            this.graphics = screen.newTextGraphics();</span>
+
+        }
+<span class="nc" id="L37">        catch (IOException | FontFormatException | URISyntaxException e){</span>
+<span class="nc" id="L38">            e.printStackTrace();</span>
+<span class="nc" id="L39">        }</span>
+<span class="nc" id="L40">    }</span>
+
+
+    private Screen createScreen(Terminal terminal) throws IOException {
+<span class="nc" id="L44">        screen = new TerminalScreen(terminal);</span>
+
+<span class="nc" id="L46">        screen.setCursorPosition(null);</span>
+<span class="nc" id="L47">        screen.startScreen();</span>
+<span class="nc" id="L48">        screen.doResizeIfNecessary();</span>
+
+<span class="nc" id="L50">        return screen;</span>
+    }
+
+    private Terminal createTerminal(SwingTerminalFontConfiguration fontConfig, int width, int height) throws IOException{
+<span class="nc" id="L54">        DefaultTerminalFactory factory = new DefaultTerminalFactory();</span>
+<span class="nc" id="L55">        factory.setInitialTerminalSize(new TerminalSize(width, height));</span>
+<span class="nc" id="L56">        factory.setTerminalEmulatorFontConfiguration(fontConfig);</span>
+
+<span class="nc" id="L58">        return factory.createTerminal();</span>
+    }
+
+    private SwingTerminalFontConfiguration createFont() throws URISyntaxException, FontFormatException, IOException {
+<span class="nc" id="L62">        URL resource = getClass().getClassLoader().getResource(&quot;fonts/CaffeineMono.otf&quot;);</span>
+<span class="nc" id="L63">        File fontFile = new File(resource.toURI());</span>
+<span class="nc" id="L64">        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
+
+<span class="nc" id="L66">        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();</span>
+<span class="nc" id="L67">        ge.registerFont(font);</span>
+
+<span class="nc" id="L69">        Font loadedFont = font.deriveFont(Font.PLAIN, DEFAULT_FONT_SIZE);</span>
+
+<span class="nc" id="L71">        return SwingTerminalFontConfiguration.newInstance(loadedFont);</span>
+    }
+
+
+    @Override
+    public void drawString(String string, int column, int row, String color) {
+
+<span class="nc" id="L78">        graphics.setForegroundColor(TextColor.Factory.fromString(color));</span>
+<span class="nc" id="L79">        graphics.putString(column, row, string,SGR.BOLD);</span>
+<span class="nc" id="L80">    }</span>
+
+    @Override
+    public void setTerminalBackgroundColor(String color){
+<span class="nc" id="L84">        graphics.setBackgroundColor(TextColor.Factory.fromString(color));</span>
+<span class="nc" id="L85">        graphics.fillRectangle(new TerminalPosition(0, 0), screen.getTerminalSize(), ' ');</span>
+<span class="nc" id="L86">    }</span>
+
+    @Override
+    public void clear(){
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(screen.doResizeIfNecessary() != null) refreshAll = true;</span>
+<span class="nc" id="L91">        screen.clear();</span>
+<span class="nc" id="L92">        setTerminalBackgroundColor(&quot;#05122D&quot;);</span>
+<span class="nc" id="L93">    }</span>
+
+    @Override
+    public void refresh() throws IOException{
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        screen.refresh((refreshAll ? Screen.RefreshType.COMPLETE : Screen.RefreshType.DELTA));</span>
+<span class="nc" id="L98">        refreshAll = false;</span>
+<span class="nc" id="L99">    }</span>
+
+    @Override
+    public void close() throws IOException{
+<span class="nc" id="L103">        screen.close();</span>
+<span class="nc" id="L104">    }</span>
+
+    @Override
+    public Key getNextKey() throws IOException{
+<span class="nc" id="L108">        KeyStroke keyStroke = screen.pollInput();</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if(keyStroke == null){</span>
+<span class="nc" id="L111">            return new Key(ACTION.NONE, null);</span>
+        }
+
+<span class="nc bnc" id="L114" title="All 10 branches missed.">        switch (keyStroke.getKeyType()){</span>
+            case ArrowDown:
+<span class="nc" id="L116">                return new Key(ACTION.DOWN, null);</span>
+            case ArrowUp:
+<span class="nc" id="L118">                return new Key(ACTION.UP, null);</span>
+            case ArrowRight:
+<span class="nc" id="L120">                return new Key(ACTION.RIGHT, null);</span>
+            case ArrowLeft:
+<span class="nc" id="L122">                return new Key(ACTION.LEFT, null);</span>
+            case EOF:
+<span class="nc" id="L124">                return new Key(ACTION.QUIT, null);</span>
+            case Enter:
+<span class="nc" id="L126">                return new Key(ACTION.SELECT, null);</span>
+            case Backspace:
+<span class="nc" id="L128">                return new Key(ACTION.DELETE, null);</span>
+            case Escape:
+<span class="nc" id="L130">                return new Key(ACTION.ESCAPE, null);</span>
+            case Character:
+<span class="nc bnc" id="L132" title="All 4 branches missed.">                switch(keyStroke.getCharacter()){</span>
+                    case 'a':
+<span class="nc" id="L134">                        return new Key(ACTION.OPEN, 'a');</span>
+                    case 's':
+<span class="nc" id="L136">                        return new Key(ACTION.FLAG, 's');</span>
+                    case 'z':
+<span class="nc" id="L138">                        return new Key(ACTION.BACK, 'z');</span>
+                    default:
+<span class="nc" id="L140">                        return new Key(ACTION.NONE, keyStroke.getCharacter());</span>
+                }
+        }
+
+<span class="nc" id="L144">        return new Key(ACTION.NONE, null);</span>
+    }
+
+    @Override
+    public int getWidthPos(int x) {
+<span class="nc" id="L149">        return (screen.getTerminalSize().getColumns() - x) / 2;</span>
+    }
+
+    @Override
+    public int getHeightPos(int y) {
+<span class="nc" id="L154">        return (screen.getTerminalSize().getRows() / 2) + y;</span>
+    }
+
+    @Override
+    public TerminalSize terminalSize(){
+<span class="nc" id="L159">        return screen.getTerminalSize();</span>
+    }
+
+    @Override
+    public void paintSquare(int column, int row, String color){
+<span class="nc" id="L164">        graphics.setBackgroundColor(TextColor.Factory.fromString(color));</span>
+<span class="nc" id="L165">        graphics.fillRectangle(new TerminalPosition(column, row), new TerminalSize(1,1), ' ');</span>
+<span class="nc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

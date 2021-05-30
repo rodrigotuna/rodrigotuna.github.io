@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SettingsMenu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.model.menu</a> &gt; <span class="el_source">SettingsMenu.java</span></div><h1>SettingsMenu.java</h1><pre class="source lang-java linenums">package lpoo.model.menu;
+
+import lpoo.model.Configuration;
+import lpoo.model.Element;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class SettingsMenu implements Element {
+    private final List&lt;String&gt; entries;
+<span class="nc" id="L11">    private int currentEntry = 0;</span>
+    private Configuration configuration;
+    private List&lt;Integer&gt; configurationValues;
+
+<span class="nc" id="L15">    public SettingsMenu(Configuration configuration) {</span>
+<span class="nc" id="L16">        this.entries = Arrays.asList(&quot;board height&quot;, &quot;board width&quot;, &quot;number of mines&quot;, &quot;back&quot;);</span>
+<span class="nc" id="L17">        this.configuration = configuration;</span>
+<span class="nc" id="L18">        this.configurationValues = Arrays.asList(</span>
+<span class="nc" id="L19">                configuration.getHeight(),configuration.getWidth(),configuration.getNumMines());</span>
+<span class="nc" id="L20">    }</span>
+
+    private void update(){
+<span class="nc" id="L23">        this.configurationValues = Arrays.asList(</span>
+<span class="nc" id="L24">                configuration.getHeight(),configuration.getWidth(),configuration.getNumMines());</span>
+<span class="nc" id="L25">    }</span>
+
+    public void nextEntry() {
+<span class="nc" id="L28">        currentEntry++;</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (currentEntry &gt; this.entries.size() - 1)</span>
+<span class="nc" id="L30">            currentEntry = 0;</span>
+<span class="nc" id="L31">    }</span>
+
+    public void previousEntry() {
+<span class="nc" id="L34">        currentEntry--;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (currentEntry &lt; 0)</span>
+<span class="nc" id="L36">            currentEntry = this.entries.size() - 1;</span>
+<span class="nc" id="L37">    }</span>
+
+    public String getEntry(int i) {
+<span class="nc" id="L40">        return entries.get(i);</span>
+    }
+
+    public boolean isSelected(int i) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        return currentEntry == i;</span>
+    }
+
+    public boolean isSelectedHeight() {
+<span class="nc" id="L48">        return isSelected(1);</span>
+    }
+
+    public boolean isSelectedWidth() {
+<span class="nc" id="L52">        return isSelected(0);</span>
+    }
+
+<span class="nc" id="L55">    public boolean isSelectedMines() {return isSelected(2);}</span>
+
+<span class="nc" id="L57">    public boolean isSelectedBack() {return isSelected(3);}</span>
+
+    public int getNumberEntries() {
+<span class="nc" id="L60">        return this.entries.size();</span>
+    }
+
+    public boolean getSelected(int index){
+<span class="nc" id="L64">        return isSelected(index);</span>
+    }
+
+    public Configuration getConfiguration(){
+<span class="nc" id="L68">        return configuration;</span>
+    }
+
+    public String getConfigurationValue(int index) {
+<span class="nc" id="L72">        String valueStr =  String.valueOf(configurationValues.get(index));</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if(valueStr.length() == 1) valueStr = &quot; &quot; + valueStr;</span>
+<span class="nc" id="L74">        return valueStr;</span>
+    }
+
+    public void increase(){
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        switch(currentEntry){</span>
+            case 0:
+<span class="nc" id="L80">                configuration.setHeight(configuration.getHeight() + 1);</span>
+<span class="nc" id="L81">                break;</span>
+            case 1:
+<span class="nc" id="L83">                configuration.setWidth(configuration.getWidth() + 1);</span>
+<span class="nc" id="L84">                break;</span>
+            case 2:
+<span class="nc" id="L86">                configuration.setNumMines(configuration.getNumMines() + 1);</span>
+                break;
+        }
+
+<span class="nc" id="L90">        update();</span>
+<span class="nc" id="L91">    }</span>
+
+    public void decrease(){
+<span class="nc bnc" id="L94" title="All 4 branches missed.">        switch(currentEntry) {</span>
+            case 0:
+<span class="nc" id="L96">                configuration.setHeight(configuration.getHeight() - 1);</span>
+<span class="nc" id="L97">                break;</span>
+            case 1:
+<span class="nc" id="L99">                configuration.setWidth(configuration.getWidth() - 1);</span>
+<span class="nc" id="L100">                break;</span>
+            case 2:
+<span class="nc" id="L102">                configuration.setNumMines(configuration.getNumMines() - 1);</span>
+                break;
+        }
+
+<span class="nc" id="L106">        update();</span>
+<span class="nc" id="L107">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.states</a> &gt; <span class="el_source">GameState.java</span></div><h1>GameState.java</h1><pre class="source lang-java linenums">package lpoo.states;
+
+import lpoo.controller.Controller;
+import lpoo.controller.game.GameController;
+import lpoo.model.game.Game;
+import lpoo.viewer.game.GameView;
+import lpoo.viewer.View;
+
+public class GameState extends State&lt;Game&gt; {
+    public GameState(Game game){
+<span class="nc" id="L11">        super(game);</span>
+<span class="nc" id="L12">    }</span>
+    @Override
+    protected View&lt;Game&gt; getViewer() {
+<span class="nc" id="L15">        return new GameView(getModel());</span>
+    }
+
+    @Override
+    protected Controller&lt;Game&gt; getController() {
+<span class="nc" id="L20">        return new GameController(getModel());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

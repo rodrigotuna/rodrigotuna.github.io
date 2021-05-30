@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CursorView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer.game</a> &gt; <span class="el_source">CursorView.java</span></div><h1>CursorView.java</h1><pre class="source lang-java linenums">package lpoo.viewer.game;
+
+import lpoo.gui.GUI;
+import lpoo.model.game.Cursor;
+import lpoo.model.Position;
+import lpoo.viewer.View;
+
+public class CursorView extends View&lt;Cursor&gt; {
+
+    public CursorView(Cursor cursor) {
+<span class="fc" id="L11">        super(cursor);</span>
+<span class="fc" id="L12">    }</span>
+
+    @Override
+    protected void drawElement(Position position, GUI gui) {
+<span class="fc" id="L16">        int cursorRows = position.getY() + getModel().getPosition().getX() * Cursor.CURSOR_HEIGHT_OFFSET;</span>
+<span class="fc" id="L17">        int cursorCols = position.getX() + getModel().getPosition().getY() *  Cursor.CURSOR_WIDTH_OFFSET;</span>
+
+<span class="fc" id="L19">        gui.drawString(&quot;&lt;&quot;,cursorCols, cursorRows,&quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L20">        gui.drawString(&quot;&gt;&quot;,cursorCols +  Cursor.CURSOR_HEIGHT_OFFSET, cursorRows,&quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L21">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SettingsView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer.menu</a> &gt; <span class="el_source">SettingsView.java</span></div><h1>SettingsView.java</h1><pre class="source lang-java linenums">package lpoo.viewer.menu;
+
+import lpoo.gui.GUI;
+import lpoo.model.Position;
+import lpoo.model.menu.Frame;
+import lpoo.model.settings.SettingsMenu;
+import lpoo.viewer.FrameView;
+import lpoo.viewer.View;
+
+public class SettingsView extends View&lt;SettingsMenu&gt; {
+
+    public SettingsView(SettingsMenu settings) {
+<span class="fc" id="L13">        super(settings);</span>
+<span class="fc" id="L14">    }</span>
+
+    private void drawSettings(GUI gui, int col){
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        for(int i = 0; i &lt; getModel().getNumberEntries()-1; i++){</span>
+<span class="nc" id="L18">            gui.drawString(getModel().getEntry(i), col, gui.getHeightPos(i * 2 - 3), &quot;#FFFFFF&quot;);</span>
+<span class="nc" id="L19">            gui.drawString(getModel().getConfigurationValue(i),</span>
+<span class="nc" id="L20">                    col + 19, gui.getHeightPos(i*2 - 3), &quot;#FFFFFF&quot; );</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">            if(getModel().getSelected(i)) {</span>
+<span class="nc" id="L22">                gui.drawString(&quot;&lt;&quot;, col + 17, gui.getHeightPos(i * 2 - 3), &quot;#FFF200&quot;);</span>
+<span class="nc" id="L23">                gui.drawString(&quot;&gt;&quot;, col + 22, gui.getHeightPos(i * 2 - 3), &quot;#FFF200&quot;);</span>
+            }
+        }
+<span class="nc" id="L26">        gui.drawString(getModel().getEntry(3), col, gui.getHeightPos(3),</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">                (getModel().getSelected(3)) ? &quot;#FFF200&quot; :&quot;#FFFFFF&quot;);</span>
+<span class="nc" id="L28">    }</span>
+
+    @Override
+    protected void drawElement(Position position, GUI gui) {
+<span class="nc" id="L32">        gui.setTerminalBackgroundColor(&quot;#05122D&quot;);</span>
+
+<span class="nc" id="L34">        Frame frame = new Frame(gui.terminalSize().getColumns(), gui.terminalSize().getRows());</span>
+
+<span class="nc" id="L36">        drawMultiColoredTitle(gui,&quot;settings.&quot;,TITLE_ROW);</span>
+<span class="nc" id="L37">        drawSettings(gui,4);</span>
+
+<span class="nc" id="L39">        new FrameView(frame).drawElement(new Position(0,0), gui);</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

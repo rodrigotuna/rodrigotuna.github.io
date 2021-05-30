@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ranking.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.model.score</a> &gt; <span class="el_source">Ranking.java</span></div><h1>Ranking.java</h1><pre class="source lang-java linenums">package lpoo.model.score;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Ranking {
+    private ArrayList&lt;HighScore&gt; highScores;
+<span class="fc" id="L8">    private final int MAXSIZE = 3;</span>
+
+<span class="fc" id="L10">    public Ranking(){</span>
+<span class="fc" id="L11">        this.highScores = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L12">    }</span>
+
+    public ArrayList&lt;HighScore&gt; getHighScores() {
+<span class="fc" id="L15">        return highScores;</span>
+    }
+
+<span class="fc" id="L18">    public void setHighScores(ArrayList&lt;HighScore&gt; highScores) { this.highScores = highScores; }</span>
+
+    public boolean isHighScoreScore(long score){
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        return highScores.get(highScores.size() - 1).getTime() &gt; score;</span>
+    }
+
+    public void addScore(HighScore highScore){
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (highScores.size() == MAXSIZE)</span>
+<span class="nc" id="L26">            highScores.remove(MAXSIZE - 1);</span>
+<span class="fc" id="L27">        highScores.add(highScore);</span>
+<span class="fc" id="L28">        Collections.sort(highScores);</span>
+<span class="fc" id="L29">    }</span>
+
+
+    public int getMaxSize() {
+<span class="fc" id="L33">        return MAXSIZE;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

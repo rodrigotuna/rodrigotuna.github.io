@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrameView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer</a> &gt; <span class="el_source">FrameView.java</span></div><h1>FrameView.java</h1><pre class="source lang-java linenums">package lpoo.viewer;
+
+import lpoo.gui.GUI;
+import lpoo.model.menu.Frame;
+import lpoo.model.Position;
+
+public class FrameView extends View&lt;Frame&gt; {
+
+    public FrameView(Frame frame) {
+<span class="fc" id="L10">        super(frame);</span>
+<span class="fc" id="L11">    }</span>
+
+    private void drawVerticalLine(GUI gui, Position position){
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        for(int i = 0; i &lt; getModel().getHeight(); i++){</span>
+<span class="fc" id="L15">            gui.paintSquare(position.getX(), position.getY()+i,getColor(i));</span>
+        }
+<span class="fc" id="L17">    }</span>
+
+    private void drawHorizontalLine(GUI gui, Position position){
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for(int i = 0; i &lt; getModel().getWidth(); i++){</span>
+<span class="fc" id="L21">            gui.paintSquare(position.getX()+i, position.getY(),getColor(i));</span>
+        }
+<span class="fc" id="L23">    }</span>
+
+    private void drawFrame(GUI gui, Position pos){
+<span class="fc" id="L26">        drawVerticalLine(gui, pos);</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if(getModel().getWidth() != 0)</span>
+<span class="fc" id="L28">            drawVerticalLine(gui, new Position(pos.getX() + getModel().getWidth()-1,pos.getY()));</span>
+<span class="fc" id="L29">        drawHorizontalLine(gui, pos);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if(getModel().getHeight() != 0)</span>
+<span class="fc" id="L31">            drawHorizontalLine(gui, new Position(pos.getX(), pos.getY()+ getModel().getHeight()-1));</span>
+<span class="fc" id="L32">    }</span>
+
+    @Override
+    public void drawElement(Position position, GUI gui) {
+<span class="fc" id="L36">        drawFrame(gui, position);</span>
+<span class="fc" id="L37">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

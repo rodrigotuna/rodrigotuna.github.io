@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Menu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.model.menu</a> &gt; <span class="el_source">Menu.java</span></div><h1>Menu.java</h1><pre class="source lang-java linenums">package lpoo.model.menu;
+
+import lpoo.model.Configuration;
+import lpoo.model.Element;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Menu implements Element {
+    private final Configuration configuration;
+    private final List&lt;String&gt; entries;
+<span class="fc" id="L12">    private int currentEntry = 0;</span>
+
+<span class="fc" id="L14">    public Menu(Configuration configuration) {</span>
+<span class="fc" id="L15">        this.entries = Arrays.asList(&quot;start game&quot;, &quot;settings&quot;, &quot;highscores&quot;, &quot;controls&quot;, &quot;exit&quot;);</span>
+<span class="fc" id="L16">        this.configuration = configuration;</span>
+<span class="fc" id="L17">    }</span>
+
+    public void nextEntry() {
+<span class="fc" id="L20">        currentEntry++;</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (currentEntry &gt; this.entries.size() - 1)</span>
+<span class="fc" id="L22">            currentEntry = 0;</span>
+<span class="fc" id="L23">    }</span>
+
+    public void previousEntry() {
+<span class="fc" id="L26">        currentEntry--;</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if (currentEntry &lt; 0)</span>
+<span class="fc" id="L28">            currentEntry = this.entries.size() - 1;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getEntry(int i) {
+<span class="nc" id="L32">        return entries.get(i);</span>
+    }
+
+    public boolean isSelected(int i) {
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        return currentEntry == i;</span>
+    }
+
+    public boolean isSelectedExit() {
+<span class="nc" id="L40">        return isSelected(4);</span>
+    }
+
+    public boolean isSelectedStart() {
+<span class="nc" id="L44">        return isSelected(0);</span>
+    }
+
+    public boolean isSelectedSettings() {
+<span class="nc" id="L48">        return isSelected(1);</span>
+    }
+
+    public boolean isSelectedHighscores() {
+<span class="nc" id="L52">        return isSelected(2);</span>
+    }
+
+    public boolean isSelectedControls() {
+<span class="nc" id="L56">        return isSelected(3);</span>
+    }
+
+    public int getNumberEntries() {
+<span class="fc" id="L60">        return this.entries.size();</span>
+    }
+
+    public Configuration getConfiguration() {
+<span class="nc" id="L64">        return configuration;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

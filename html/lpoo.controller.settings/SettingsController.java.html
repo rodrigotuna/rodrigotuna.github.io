@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SettingsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.controller.settings</a> &gt; <span class="el_source">SettingsController.java</span></div><h1>SettingsController.java</h1><pre class="source lang-java linenums">package lpoo.controller.settings;
+
+import lpoo.Application;
+import lpoo.controller.Controller;
+import lpoo.gui.Key;
+import lpoo.model.menu.Menu;
+import lpoo.model.settings.SettingsMenu;
+import lpoo.states.MenuState;
+
+public class SettingsController extends Controller&lt;SettingsMenu&gt; {
+
+    public SettingsController(SettingsMenu model) {
+<span class="fc" id="L13">        super(model);</span>
+<span class="fc" id="L14">    }</span>
+
+    @Override
+    public void step(Application application, Key key) {
+<span class="pc bpc" id="L18" title="2 of 7 branches missed.">        switch(key.getAction()){</span>
+            case UP:
+<span class="fc" id="L20">                getModel().previousEntry();</span>
+<span class="fc" id="L21">                break;</span>
+            case DOWN:
+<span class="fc" id="L23">                getModel().nextEntry();</span>
+<span class="fc" id="L24">                break;</span>
+            case LEFT:
+<span class="fc" id="L26">                getModel().decrease();</span>
+<span class="fc" id="L27">                break;</span>
+            case RIGHT:
+<span class="fc" id="L29">                getModel().increase();</span>
+<span class="fc" id="L30">                break;</span>
+            case SELECT:
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">                if(getModel().isSelectedBack()){</span>
+<span class="fc" id="L33">                    application.setState(new MenuState(new Menu(getModel().getConfiguration())));</span>
+                }
+                break;
+            case QUIT:
+<span class="nc" id="L37">                application.setState(null);</span>
+                break;
+        }
+<span class="fc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

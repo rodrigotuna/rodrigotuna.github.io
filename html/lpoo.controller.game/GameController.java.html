@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.controller.game</a> &gt; <span class="el_source">GameController.java</span></div><h1>GameController.java</h1><pre class="source lang-java linenums">package lpoo.controller.game;
+
+import lpoo.Application;
+import lpoo.controller.Controller;
+import lpoo.controller.game.commands.*;
+import lpoo.gui.Key;
+import lpoo.model.game.Game;
+import lpoo.model.game.Tile;
+import lpoo.model.game.tilestate.TileState;
+import lpoo.model.score.GameOverMenu;
+import lpoo.model.menu.Menu;
+import lpoo.states.GameOverState;
+import lpoo.states.MenuState;
+
+import java.util.Stack;
+
+public class GameController extends Controller&lt;Game&gt; {
+    private final Stack&lt;Command&gt; commands;
+<span class="fc" id="L19">    private Command command = null;</span>
+
+    public GameController(Game game){
+<span class="fc" id="L22">        super(game);</span>
+<span class="fc" id="L23">        this.commands = new Stack&lt;&gt;();</span>
+<span class="fc" id="L24">    }</span>
+
+    protected void executeCommand(Command command) {
+<span class="fc" id="L27">        commands.push(command);</span>
+<span class="fc" id="L28">        command.execute();</span>
+<span class="fc" id="L29">    }</span>
+
+    private void undoLastCommand(){
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if(!commands.empty()){</span>
+<span class="nc" id="L33">            commands.peek().undo();</span>
+<span class="nc" id="L34">            commands.pop();</span>
+        }
+<span class="nc" id="L36">    }</span>
+
+    private void checkGameOver(Application application) {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(getModel().getBoard().getRemainingTiles() == 0) {</span>
+<span class="fc" id="L40">            application.setState(new GameOverState(new GameOverMenu(getModel().getConfiguration(), true, getModel().getScore())));</span>
+<span class="fc" id="L41">            application.setDefaultGUI();</span>
+        }
+
+<span class="fc" id="L44">        Tile changedTile = getModel().selectedTile();</span>
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">        if(changedTile.getAdjacentMines() == -1 &amp;&amp; changedTile.getStateName() == TileState.STATE.OPEN){</span>
+<span class="fc" id="L46">            application.setState(new GameOverState(new GameOverMenu(getModel().getConfiguration(), false, getModel().getScore())));</span>
+<span class="fc" id="L47">            application.setDefaultGUI();</span>
+        }
+<span class="fc" id="L49">    }</span>
+
+    @Override
+    public void step(Application application, Key key) {
+<span class="pc bpc" id="L53" title="3 of 10 branches missed.">        switch (key.getAction()){</span>
+            case UP:
+<span class="fc" id="L55">                executeCommand(new MoveUpCommand(getModel()));</span>
+<span class="fc" id="L56">                break;</span>
+            case DOWN:
+<span class="fc" id="L58">                executeCommand(new MoveDownCommand(getModel()));</span>
+<span class="fc" id="L59">                break;</span>
+            case LEFT:
+<span class="fc" id="L61">                executeCommand(new MoveLeftCommand(getModel()));</span>
+<span class="fc" id="L62">                break;</span>
+            case RIGHT:
+<span class="fc" id="L64">                executeCommand(new MoveRightCommand(getModel()));</span>
+<span class="fc" id="L65">                break;</span>
+            case FLAG:
+<span class="fc" id="L67">                executeCommand(new FlagCommand(getModel()));</span>
+<span class="fc" id="L68">                break;</span>
+            case OPEN:
+<span class="nc" id="L70">                executeCommand(new OpenCommand(getModel()));</span>
+<span class="nc" id="L71">                break;</span>
+            case BACK:
+<span class="nc" id="L73">                undoLastCommand();</span>
+<span class="nc" id="L74">                break;</span>
+            case QUIT:
+<span class="fc" id="L76">                application.setState(null);</span>
+<span class="fc" id="L77">                break;</span>
+            case ESCAPE:
+<span class="nc" id="L79">                application.setState(new MenuState(new Menu(getModel().getConfiguration())));</span>
+<span class="nc" id="L80">                application.setDefaultGUI();</span>
+        }
+
+<span class="fc" id="L83">        checkGameOver(application);</span>
+<span class="fc" id="L84">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

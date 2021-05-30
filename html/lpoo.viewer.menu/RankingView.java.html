@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RankingView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">lpoo.viewer.menu</a> &gt; <span class="el_source">RankingView.java</span></div><h1>RankingView.java</h1><pre class="source lang-java linenums">package lpoo.viewer.menu;
+
+import lpoo.gui.GUI;
+import lpoo.model.Position;
+import lpoo.model.menu.Frame;
+import lpoo.model.score.RankingMenu;
+import lpoo.model.score.Ranking;
+import lpoo.viewer.FrameView;
+import lpoo.viewer.View;
+
+public class RankingView extends View&lt;RankingMenu&gt; {
+    public RankingView(RankingMenu ranking) {
+<span class="fc" id="L13">        super(ranking);</span>
+<span class="fc" id="L14">    }</span>
+
+    private void drawRanking(GUI gui, int center, String highScoreTitle){
+
+<span class="fc" id="L18">        String nameTitle = &quot;name&quot;;</span>
+<span class="fc" id="L19">        int nameCol = center - nameTitle.length();</span>
+<span class="fc" id="L20">        gui.drawString(nameTitle, nameCol,TITLE_ROW + 3,getColor(3));</span>
+
+<span class="fc" id="L22">        String scoreTitle = &quot;score&quot;;</span>
+<span class="fc" id="L23">        int scoreCol = center + highScoreTitle.length();</span>
+<span class="fc" id="L24">        gui.drawString(scoreTitle, scoreCol,TITLE_ROW + 3,getColor(0));</span>
+
+<span class="fc" id="L26">        drawScores(gui, nameCol, scoreCol);</span>
+
+<span class="fc" id="L28">    }</span>
+
+    private void drawScores(GUI gui, int nameCol, int scoreCol){
+        String name, score;
+<span class="fc" id="L32">        Ranking ranking = getModel().getRanking();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (int i = 0; i &lt; ranking.getMaxSize(); i++){</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            if (i &lt; ranking.getHighScores().size()) {</span>
+<span class="fc" id="L35">                name = ranking.getHighScores().get(i).getUsername();</span>
+<span class="fc" id="L36">                score = String.valueOf(ranking.getHighScores().get(i).getScore());</span>
+            }
+            else {
+<span class="fc" id="L39">                name = &quot;----&quot;;</span>
+<span class="fc" id="L40">                score = &quot;-----&quot;;</span>
+            }
+<span class="fc" id="L42">            gui.drawString(name, nameCol,</span>
+<span class="fc" id="L43">                    gui.getHeightPos(i * 2 - 2),&quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L44">            gui.drawString(score, scoreCol,</span>
+<span class="fc" id="L45">                    gui.getHeightPos(i * 2 - 2), &quot;#FFFFFF&quot;);</span>
+        }
+
+<span class="fc" id="L48">    }</span>
+
+    @Override
+    protected void drawElement(Position position, GUI gui) {
+<span class="fc" id="L52">        gui.setTerminalBackgroundColor(&quot;#05122D&quot;);</span>
+
+<span class="fc" id="L54">        Frame frame = new Frame(gui.terminalSize().getColumns(), gui.terminalSize().getRows());</span>
+
+<span class="fc" id="L56">        String highScoreTitle = &quot; highscores.&quot;;</span>
+<span class="fc" id="L57">        int center = drawMultiColoredTitle(gui,highScoreTitle,TITLE_ROW);</span>
+
+<span class="fc" id="L59">        drawRanking(gui, center, highScoreTitle);</span>
+
+<span class="fc" id="L61">        String backMessage = &quot;back&quot;;</span>
+<span class="fc" id="L62">        gui.drawString(backMessage, gui.getWidthPos(backMessage.length()),</span>
+<span class="fc" id="L63">                gui.getHeightPos(TITLE_ROW+2),&quot;#FFF200&quot;);</span>
+
+<span class="fc" id="L65">        new FrameView(frame).drawElement(new Position(0,0), gui);</span>
+<span class="fc" id="L66">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
